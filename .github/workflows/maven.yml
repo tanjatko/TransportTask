@@ -11,7 +11,7 @@ on:
   push:
     branches: [ "main" ]
   schedule:
-    - cron: "0 0/61 * * *"
+    - cron: "15 0 */1 * *"
 
 jobs:
   build:
