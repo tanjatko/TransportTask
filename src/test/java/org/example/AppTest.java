@@ -19,7 +19,7 @@ public class AppTest {
 
         RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.setBaseUri("https://api.lardi-trans.com/v2");
-        builder.addHeader("Authorization", token);
+        builder.addHeader("Authorization", 123);
         builder.addHeader("Accept", "application/json");
 
         RequestSpecification spec = builder.build();
