@@ -13,7 +13,10 @@ public class AppTest {
 
     @Test
     public void shouldRepeatApplication()  {
-      //  String token = System.getProperty("token");
+        String token = System.getProperty("token");
+        String token2 = System.getenv("token");
+        System.out.println(token);
+        System.out.println(token2);
 
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
