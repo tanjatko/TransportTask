@@ -30,4 +30,4 @@ jobs:
     - name: Run tests
       env:
         token: ${{ secrets.TOKEN }}
-      run: mnv test -Dtoken=$token
+      run: mvn test -Dtoken=$token
