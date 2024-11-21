@@ -13,13 +13,13 @@ public class AppTest {
 
     @Test
     public void shouldRepeatApplication()  {
-        //String token = System.getenv("token");
+        String token = System.getenv("token");
 
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.setBaseUri("https://api.lardi-trans.com/v2");
-        builder.addHeader("Authorization", "2NK0IAW8LP2000004004");
+        builder.addHeader("Authorization", token);
         builder.addHeader("Accept", "application/json");
 
         RequestSpecification spec = builder.build();
