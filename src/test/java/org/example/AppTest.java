@@ -8,6 +8,7 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasKey;
 
 public class AppTest {
 
@@ -30,6 +31,7 @@ public class AppTest {
 
         given().spec(spec).contentType("application/json").body("{\"lorryIds\":[297563298516]}").when()
                 .post("/proposals/my/repeat/").then()
-                .statusCode(200);
+                .statusCode(200)
+                .body("lorries", hasKey("success"));;
     }
 }
