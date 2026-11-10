@@ -54,7 +54,8 @@ public class AppTest {
             System.out.println("::warning title=Not repeated::" + errors);
         }
 
-        assertNotNull(success, "Unexpected response: no lorries.success list");
+        // Lardi omits "success" when nothing was repeated; only a missing "lorries" block is unexpected.
+        assertNotNull(result.get("lorries"), "Unexpected response: no lorries block");
     }
 
     private static String readToken() {
