@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 
 /**
@@ -50,12 +49,12 @@ public class AppTest {
 
         System.out.println("Repeated successfully: " + success);
         if (errors != null && !errors.isEmpty()) {
-            System.out.println("Not repeated: " + errors);
+            // Lardi refusing a repeat (e.g. too soon) is expected with frequent runs:
+            // show it as a warning on the run instead of failing it.
+            System.out.println("::warning title=Not repeated::" + errors);
         }
 
-        assertNotNull(success, "Response has no lorries.success list");
-        assertFalse(success.isEmpty(),
-                "None of the lorry proposals were repeated. Errors: " + errors);
+        assertNotNull(success, "Unexpected response: no lorries.success list");
     }
 
     private static String readToken() {

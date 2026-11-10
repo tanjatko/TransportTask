@@ -6,11 +6,10 @@ on:
   # Run it by hand from the Actions tab ("Run workflow").
   workflow_dispatch:
   schedule:
-    # Every 30 minutes, 08:00-22:30 UTC (= 10:00-00:30 Kyiv in winter, 11:00-01:30 in summer).
-    # Cron can't do "every 50 minutes"; minutes 5,35 avoid the busy top of the hour,
-    # when GitHub delays scheduled runs the most.
+    # Every 5 minutes, 08:00-22:55 UTC (= 10:00-00:55 Kyiv in winter, 11:00-01:55 in summer).
+    # 5 minutes is GitHub's minimum; GitHub often delays or skips scheduled runs when busy.
     # Note: GitHub disables scheduled workflows after 60 days without commits.
-    - cron: "5,35 8-22 * * *"
+    - cron: "*/5 8-22 * * *"
 
 concurrency:
   group: repeat-lorries
