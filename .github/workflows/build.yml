@@ -1,22 +1,25 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+name: Repeat Lardi-Trans lorries
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Running repeat request
 on:
   push:
     branches: [ "main" ]
+  # Run it by hand from the Actions tab ("Run workflow").
+  workflow_dispatch:
   schedule:
-    - cron: "*/50 8-22 * * *"
+    # Every 30 minutes, 08:00-22:30 UTC (= 10:00-00:30 Kyiv in winter, 11:00-01:30 in summer).
+    # Cron can't do "every 50 minutes"; minutes 5,35 avoid the busy top of the hour,
+    # when GitHub delays scheduled runs the most.
+    # Note: GitHub disables scheduled workflows after 60 days without commits.
+    - cron: "5,35 8-22 * * *"
+
+concurrency:
+  group: repeat-lorries
+  cancel-in-progress: false
 
 jobs:
-  build:
-
+  repeat:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - uses: actions/checkout@v4
@@ -26,7 +29,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Run tests
+    - name: Repeat published lorries
       env:
         token: ${{ secrets.TOKEN }}
-      run: mvn test -Dtoken=$token
+      run: mvn -B test
