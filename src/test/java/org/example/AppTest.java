@@ -100,12 +100,13 @@ public class AppTest {
                     .statusCode(200)
                     .extract().jsonPath();
 
-            List<Number> pageIds = body.getList("content.id", Number.class);
+            // IDs exceed int range, so read them as raw values and parse as long.
+            List<Object> pageIds = body.getList("content.id");
             if (pageIds != null) {
-                pageIds.forEach(id -> ids.add(id.longValue()));
+                pageIds.forEach(id -> ids.add(Long.parseLong(String.valueOf(id))));
             }
-            Integer totalPages = body.get("paginator.pages");
-            pages = totalPages == null ? 1 : totalPages;
+            Object totalPages = body.get("paginator.pages");
+            pages = totalPages == null ? 1 : Integer.parseInt(String.valueOf(totalPages));
             page++;
         } while (page <= pages);
         return ids;
